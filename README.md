@@ -3,17 +3,23 @@
 
 > 매일 한 입(byte)씩 쌓이는 IT 기록. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈 아카이브예요.
 
-![posts](https://img.shields.io/badge/posts-3-7C5CFF) ![days](https://img.shields.io/badge/days-1-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--24-F59E0B)
+![posts](https://img.shields.io/badge/posts-6-7C5CFF) ![days](https://img.shields.io/badge/days-2-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--25-F59E0B)
 
 매일 저녁 8시(KST), 티스토리에 세 편이 올라오면 이곳에도 마크다운으로 함께 쌓여요.
 
 | 카테고리 | 내용 | 글 수 |
 |---|---|---|
-| 🤖 [AI 이슈](./ai-issue) | 그날 가장 의미 있는 AI 뉴스를 깊게 | 1 |
-| 📈 [AI 트렌드](./ai-trend) | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 1 |
-| 🛠️ [개발 이슈](./dev-issue) | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 1 |
+| 🤖 [AI 이슈](./ai-issue) | 그날 가장 의미 있는 AI 뉴스를 깊게 | 2 |
+| 📈 [AI 트렌드](./ai-trend) | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 2 |
+| 🛠️ [개발 이슈](./dev-issue) | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 2 |
 
 ## 🗓️ 최근 7일
+
+### 2026-11-25
+
+- 🤖 **AI 이슈** · [OpenRouter ZDR 125곳 회수, 루프 모델 Inkling 2 Mini, 의료 오픈 모델 LingSante](ai-issue/2026/11/2026-11-25-openrouter-zdr-inkling-lingsante.md) · [티스토리](https://dongseodong.tistory.com/62)
+- 📈 **AI 트렌드** · [에이전트를 지키는 도구들: safe-anything, AI 공격 탐지 규칙, songe](ai-trend/2026/11/2026-11-25-agent-security-tools.md) · [티스토리](https://dongseodong.tistory.com/63)
+- 🛠️ **개발 이슈** · [Node.js 보안 릴리스 HIGH 7건, 패치 전까지 버티는 eBPF 방어막 Shirudo](dev-issue/2026/11/2026-11-25-nodejs-security-release-shirudo.md) · [티스토리](https://dongseodong.tistory.com/64)
 
 ### 2026-11-24
 
