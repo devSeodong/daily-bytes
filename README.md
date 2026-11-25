@@ -1,3 +1,4 @@
+<!-- 이 README는 scripts/build_readme.py가 자동으로 만듭니다. 직접 고치지 말고 스크립트를 고쳐 주세요. -->
 # 📚 daily-bytes
 
 > 매일 한 입(byte)씩 쌓이는 IT 기록. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈 아카이브예요.
@@ -27,4 +28,4 @@
 <카테고리>/<연>/<월>/assets/   # 대표 이미지
 ```
 
-README는 `python3 scripts/build_readme.py`로 자동 생성돼요. 손으로 고치지 마세요 🙂
+📝 매일 새 글은 [티스토리](https://dongseodong.tistory.com/)에서 먼저 만나보세요!

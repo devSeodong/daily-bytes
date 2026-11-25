@@ -81,7 +81,8 @@ def main():
 
     L.append("## 📁 구조\n")
     L.append("```\n<카테고리>/<연>/<월>/<날짜>-<slug>.md\n<카테고리>/<연>/<월>/assets/   # 대표 이미지\n```\n")
-    L.append("README는 `python3 scripts/build_readme.py`로 자동 생성돼요. 손으로 고치지 마세요 🙂")
+    L.append(f"📝 매일 새 글은 [티스토리]({BLOG})에서 먼저 만나보세요!")
+    L.insert(0, "<!-- 이 README는 scripts/build_readme.py가 자동으로 만듭니다. 직접 고치지 말고 스크립트를 고쳐 주세요. -->")
     (ROOT / "README.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 
     # 카테고리별 README
