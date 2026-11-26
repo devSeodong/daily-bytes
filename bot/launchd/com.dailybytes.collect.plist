@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.dailybytes.collect</string>
+  <key>ProgramArguments</key><array>
+    <string>/bin/bash</string><string>__BOT_DIR__/run.sh</string><string>collect</string>
+  </array>
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>19</integer><key>Minute</key><integer>0</integer></dict>
+  <key>RunAtLoad</key><false/>
+  <key>LimitLoadToSessionType</key><string>Aqua</string>  <!-- 로그인한 GUI 세션에서 실행 (headful Chromium) -->
+</dict></plist>
