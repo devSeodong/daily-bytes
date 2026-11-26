@@ -1,9 +1,9 @@
 <!-- 이 README는 scripts/build_readme.py가 자동으로 만듭니다. 직접 고치지 말고 스크립트를 고쳐 주세요. -->
 # 📚 daily-bytes
 
-> 매일 한 입(byte)씩 쌓이는 IT 기록. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈 아카이브예요.
+> 매일 한 입(byte)씩 쌓이는 IT 기록. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글 아카이브예요.
 
-![posts](https://img.shields.io/badge/posts-6-7C5CFF) ![days](https://img.shields.io/badge/days-2-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--25-F59E0B)
+![posts](https://img.shields.io/badge/posts-8-7C5CFF) ![days](https://img.shields.io/badge/days-3-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--26-F59E0B)
 
 매일 저녁 8시(KST), 티스토리에 세 편이 올라오면 이곳에도 마크다운으로 함께 쌓여요.
 
@@ -12,8 +12,14 @@
 | 🤖 [AI 이슈](./ai-issue) | 그날 가장 의미 있는 AI 뉴스를 깊게 | 2 |
 | 📈 [AI 트렌드](./ai-trend) | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 2 |
 | 🛠️ [개발 이슈](./dev-issue) | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 2 |
+| 🧪 [AI 활용](./ai-usage) | Claude로 직접 만들고 자동화해 본 경험 기록 | 2 |
 
 ## 🗓️ 최근 7일
+
+### 2026-11-26
+
+- 🧪 **AI 활용** · [맥 미니 한 대로 티스토리 매일 3편 자동 발행하기 (launchd + Playwright + Pillow)](ai-usage/2026/11/2026-11-26-tistory-automation-mac-mini-batch.md) · [티스토리](https://dongseodong.tistory.com/66)
+- 🧪 **AI 활용** · [티스토리 블로그 GEO 세팅기: ChatGPT·Perplexity 같은 AI 검색에 잘 잡히게 만들기](ai-usage/2026/11/2026-11-26-tistory-geo-setup.md) · [티스토리](https://dongseodong.tistory.com/67)
 
 ### 2026-11-25
 
