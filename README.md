@@ -3,21 +3,24 @@
 
 > 매일 한 입(byte)씩 쌓이는 IT 기록. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글 아카이브예요.
 
-![posts](https://img.shields.io/badge/posts-8-7C5CFF) ![days](https://img.shields.io/badge/days-3-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--26-F59E0B)
+![posts](https://img.shields.io/badge/posts-11-7C5CFF) ![days](https://img.shields.io/badge/days-3-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--26-F59E0B)
 
 매일 저녁 8시(KST), 티스토리에 세 편이 올라오면 이곳에도 마크다운으로 함께 쌓여요.
 
 | 카테고리 | 내용 | 글 수 |
 |---|---|---|
-| 🤖 [AI 이슈](./ai-issue) | 그날 가장 의미 있는 AI 뉴스를 깊게 | 2 |
-| 📈 [AI 트렌드](./ai-trend) | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 2 |
-| 🛠️ [개발 이슈](./dev-issue) | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 2 |
+| 🤖 [AI 이슈](./ai-issue) | 그날 가장 의미 있는 AI 뉴스를 깊게 | 3 |
+| 📈 [AI 트렌드](./ai-trend) | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 3 |
+| 🛠️ [개발 이슈](./dev-issue) | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 3 |
 | 🧪 [AI 활용](./ai-usage) | Claude로 직접 만들고 자동화해 본 경험 기록 | 2 |
 
 ## 🗓️ 최근 7일
 
 ### 2026-11-26
 
+- 🤖 **AI 이슈** · [Messages API를 Rust로 옮긴 Anthropic, 검증은 운영 트래픽 그림자 비교로](ai-issue/2026/11/2026-11-26-anthropic-rust-messages-api.md) · [티스토리](https://dongseodong.tistory.com/68)
+- 📈 **AI 트렌드** · [에이전트가 만든 코드를 다듬는 도구들: deslop-please, skill-distill, llm.asm](ai-trend/2026/11/2026-11-26-agent-code-cleanup-tools.md) · [티스토리](https://dongseodong.tistory.com/69)
+- 🛠️ **개발 이슈** · [12월 지원 종료 3종: Docker Engine 25.0, 리눅스 커널 5.15, Spring Boot 4.0](dev-issue/2026/11/2026-11-26-december-eol-docker-kernel-springboot.md) · [티스토리](https://dongseodong.tistory.com/70)
 - 🧪 **AI 활용** · [맥 미니 한 대로 티스토리 매일 3편 자동 발행하기 (launchd + Playwright + Pillow)](ai-usage/2026/11/2026-11-26-tistory-automation-mac-mini-batch.md) · [티스토리](https://dongseodong.tistory.com/66)
 - 🧪 **AI 활용** · [티스토리 블로그 GEO 세팅기: ChatGPT·Perplexity 같은 AI 검색에 잘 잡히게 만들기](ai-usage/2026/11/2026-11-26-tistory-geo-setup.md) · [티스토리](https://dongseodong.tistory.com/67)
 
