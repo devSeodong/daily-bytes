@@ -20,12 +20,12 @@ FONT_CANDIDATES = [
 ]
 
 
-def font(size, bold=True):
+def font(size, bold=True, weight=None):
     for p in FONT_CANDIDATES:
         if p and Path(p).exists():
             if p.endswith(".ttc"):
                 # ttc 안에서 이름으로 Bold / Regular 면을 찾음 (AppleSDGothicNeo: Bold=6, Regular=0)
-                want = "Bold" if bold else "Regular"
+                want = weight or ("Bold" if bold else "Regular")
                 for i in range(32):
                     try:
                         f = ImageFont.truetype(p, size, index=i)
@@ -61,22 +61,27 @@ def wrap(text, f, maxw, draw, maxlines=3):
 def render(cat_key, lines_or_title, date, out):
     c = CATS[cat_key]; col = hex2rgb(c["color"])
     img = Image.new("RGB", (W, H), BG)
-    # 오른쪽 빛 번짐
-    glow = Image.new("RGB", (W, H), BG); g = ImageDraw.Draw(glow)
-    g.ellipse((780, 60, 1240, 520), fill=tuple(int(BG[i] * 0.3 + col[i] * 0.7) for i in range(3)))
-    img = Image.blend(img, glow.filter(ImageFilter.GaussianBlur(120)), 0.55)
     d = ImageDraw.Draw(img)
-    for x in range(0, W, 40):  # 픽셀 그리드
-        d.line([(x, 0), (x, H)], fill=(30, 39, 59))
+    for x in range(0, W, 40):  # 픽셀 그리드 (빛 번짐 아래에 깔림)
+        d.line([(x, 0), (x, H)], fill=(24, 33, 52))
     for y in range(0, H, 40):
-        d.line([(0, y), (W, y)], fill=(30, 39, 59))
+        d.line([(0, y), (W, y)], fill=(24, 33, 52))
+    # 오른쪽 위 빛 번짐: 카테고리 색 원을 흐리게 덮음
+    mask = Image.new("L", (W, H), 0)
+    md = ImageDraw.Draw(mask)
+    md.ellipse((780, 30, 1160, 410), fill=150)
+    md.ellipse((880, 130, 1060, 310), fill=235)   # 가운데가 더 밝게
+    mask = mask.filter(ImageFilter.GaussianBlur(85))
+    tint = Image.new("RGB", (W, H), tuple(int(BG[i] * 0.35 + col[i] * 0.65) for i in range(3)))
+    img = Image.composite(tint, img, mask)
+    d = ImageDraw.Draw(img)
     # 카테고리 알약 + 날짜
     f_pill = font(26); pw = d.textlength(c["label"], font=f_pill) + 48
     d.rounded_rectangle((80, 70, 80 + pw, 124), radius=27, fill=col)
     d.text((104, 97), c["label"], font=f_pill, fill="white", anchor="lm")
     d.text((80 + pw + 22, 97), date.replace("-", "."), font=font(24, False), fill=(148, 163, 184), anchor="lm")
     d.text((80, 210), c["head"], font=font(36), fill=col, anchor="lm")
-    f_t = font(54)
+    f_t = font(54, weight="ExtraBold")
     if isinstance(lines_or_title, list):
         lines = [l for l in lines_or_title if l][:3]
     else:

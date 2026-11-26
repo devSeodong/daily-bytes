@@ -17,7 +17,7 @@ BLOG = "https://dongseodong.tistory.com"
 CATS = {
     "01-ai-issue":     {"slug": "ai-issue",  "label": "AI 이슈",   "head": "오늘의 AI 이슈",   "color": "#7C5CFF"},
     "02-ai-trend":     {"slug": "ai-trend",  "label": "AI 트렌드", "head": "오늘의 AI 트렌드", "color": "#10B981"},
-    "03-cs-dev-issue": {"slug": "dev-issue", "label": "개발 이슈", "head": "오늘의 개발 이슈", "color": "#F59E0B"},
+    "03-cs-dev-issue": {"slug": "dev-issue", "label": "개발 이슈", "head": "오늘의 CS/개발 이슈", "color": "#F59E0B"},
 }
 
 
