@@ -13,12 +13,37 @@ from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 from config import BLOG, BOT, CATS, PROFILE, day_dir, notify, read_meta, strip_meta
 
 VIS = {"public": "#open20", "protected": "#open15", "private": "#open0"}
+STATE = BOT / "state.json"   # 로그인 쿠키 백업 (권한 600). 세션 쿠키도 브라우저 재시작 뒤 되살린다.
+KEEP_DAYS = 30
+
+
+def save_state(ctx):
+    """현재 쿠키를 state.json에 백업. 세션 쿠키(만료 없음)는 KEEP_DAYS 뒤 만료로 바꿔 저장."""
+    st = ctx.storage_state()
+    until = time.time() + KEEP_DAYS * 86400
+    for c in st.get("cookies", []):
+        if c.get("expires", -1) in (-1, None) or c["expires"] < 0:
+            c["expires"] = until
+    STATE.write_text(json.dumps(st, ensure_ascii=False), encoding="utf-8")
+    STATE.chmod(0o600)
+
+
+def restore_state(ctx):
+    if not STATE.exists():
+        return
+    try:
+        cookies = json.loads(STATE.read_text(encoding="utf-8")).get("cookies", [])
+        now = time.time()
+        ctx.add_cookies([c for c in cookies if c.get("expires", now + 1) > now])
+    except Exception as e:
+        print("state.json 복원 실패:", e, flush=True)
 
 
 def browser(p, headless=False):
     PROFILE.mkdir(parents=True, exist_ok=True)
     ctx = p.chromium.launch_persistent_context(str(PROFILE), headless=headless, locale="ko-KR",
                                                viewport={"width": 1400, "height": 1000})
+    restore_state(ctx)
     page = ctx.pages[0] if ctx.pages else ctx.new_page()
     page.on("dialog", lambda d: d.dismiss())   # "작성 중인 글이 있어요, 이어서?" → 새로 쓰기
     return ctx, page
@@ -45,15 +70,27 @@ def do_login(p):
     except PWTimeout:
         pass
     time.sleep(3)
-    try:  # 카카오 QR 로그인 탭 + 로그인 상태 유지
+    # '로그인 상태 유지'는 QR 탭을 열기 '전에' 체크해야 QR 요청에 반영된다 (append_stay_signed_in=true).
+    # 나중에 체크하면 세션 쿠키로만 저장돼 브라우저를 닫는 순간 로그아웃된다.
+    stay = False
+    try:
+        box = page.locator("input[name='stay_signed_in'], input#staySignedIn").first
+        if not box.is_checked():
+            page.get_by_text("로그인 상태 유지").first.click(timeout=3000)
+        stay = box.is_checked()
+    except Exception:
+        try:
+            page.get_by_text("로그인 상태 유지").first.click(timeout=3000); stay = True
+        except Exception:
+            pass
+    print("로그인 상태 유지:", stay, flush=True)
+    try:  # 카카오 QR 로그인 탭
         page.get_by_text("QR코드 로그인").first.click(timeout=5000)
         time.sleep(2)
     except PWTimeout:
         pass
-    try:  # 로그인 상태 유지 (세션을 오래 살려 매일 발행이 끊기지 않게)
-        page.get_by_text("로그인 상태 유지").first.click(timeout=3000)
-    except Exception:
-        pass
+    if "append_stay_signed_in=false" in page.url:
+        print("경고: QR 주소에 append_stay_signed_in=false — 로그인 상태 유지가 적용 안 됐어요", flush=True)
     shot = BOT / "work" / "login-qr.png"; shot.parent.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(shot))
     expiry = time.strftime("%H:%M:%S", time.localtime(time.time() + 300))
@@ -76,6 +113,17 @@ def do_login(p):
     page.screenshot(path=str(BOT / "work" / "login-last.png"))
     ok = logged_in(page)
     print("logged_in:", ok, page.url[:120], flush=True)
+    if ok:
+        save_state(ctx)
+    ctx.close()
+    if not ok:
+        return False
+    # 브라우저를 껐다 켜도 살아 있는지 확인 (매일 발행은 새 브라우저로 시작하므로)
+    ctx, page = browser(p)
+    ok = logged_in(page)
+    print("재시작 후 logged_in:", ok, flush=True)
+    if ok:
+        save_state(ctx)
     ctx.close()
     return ok
 
@@ -167,6 +215,7 @@ def main():
             ctx.close()
             notify("티스토리 로그인 만료", "맥 미니에서 다시 로그인이 필요해요 (publish.py --login)")
             sys.exit(2)
+        save_state(ctx)   # 갱신된 쿠키 백업
         if a.check:
             ctx.close(); print("로그인 OK"); return
         d = day_dir(a.date); out = d / "published.json"
