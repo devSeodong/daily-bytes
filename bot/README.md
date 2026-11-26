@@ -29,4 +29,6 @@ python3.12 publish.py --login        # 카카오 QR 로그인 (한 번)
 launchd: `launchd/*.plist`의 `__BOT_DIR__`, `__VIS__`(public|private)를 바꿔 `~/Library/LaunchAgents/`에 넣고 `launchctl load`.
 
 ## 알림
+로그인 쿠키는 `~/daily-bytes-bot/state.json`(권한 600)에도 백업돼서 브라우저를 다시 켜도 되살아나요. 로그인할 땐 QR 탭을 열기 전에 "로그인 상태 유지"를 체크해요.
+
 실패/로그인 만료 시 맥 알림 + `~/daily-bytes-bot/status.json`. 로그는 `~/daily-bytes-bot/logs/<날짜>.log`.
