@@ -34,7 +34,7 @@ def logged_in(page):
     time.sleep(3)
     if "login" in page.url or "/manage" not in page.url:
         return False
-    return page.locator("a[href*='/manage/newpost']").count() > 0
+    return page.locator("a[href*='/manage/post']").count() > 0
 
 
 def do_login(p):
@@ -66,11 +66,17 @@ def do_login(p):
             print("QR 텍스트: work/login-qr.txt", flush=True)
     except Exception:
         pass
-    for _ in range(60):
+    last = None
+    for i in range(60):
         time.sleep(5)
+        if page.url != last:
+            last = page.url; print(f"[{i*5}s] {last[:120]}", flush=True)
         if "tistory.com" in page.url and "login" not in page.url:
-            print("로그인 완료"); break
-    ok = logged_in(page); ctx.close()
+            print("로그인 완료", flush=True); break
+    page.screenshot(path=str(BOT / "work" / "login-last.png"))
+    ok = logged_in(page)
+    print("logged_in:", ok, page.url[:120], flush=True)
+    ctx.close()
     return ok
 
 
@@ -127,7 +133,16 @@ def publish_one(page, key, draft, cover, vis):
     set_body(page, strip_meta(raw), cover if cover.exists() else None)
     add_tags(page, tags)
     page.click("#publish-layer-btn")
-    page.click(VIS[vis], timeout=10000)
+    page.wait_for_selector(VIS[vis], state="attached", timeout=10000)
+    # 라디오 input/label은 높이 0이라 안쪽 글자(span)를 누름
+    page.click(f"label[for={VIS[vis][1:]}] .checkbox-text")
+    if not page.is_checked(VIS[vis]):
+        raise RuntimeError(f"공개 범위 {vis} 선택 실패")
+    if cover.exists():  # 발행 창의 '대표이미지 추가'에 커버 업로드
+        page.set_input_files(".box_thumb input[type=file]", str(cover))
+        # 업로드가 끝나면 '대표이미지 추가' 안내 글자가 사라지고 미리보기가 뜸
+        page.wait_for_selector(".box_thumb .txt_thumb", state="hidden", timeout=30000)
+        time.sleep(1)
     with page.expect_navigation(timeout=60000):
         page.click("#publish-btn")
     time.sleep(3)
