@@ -23,9 +23,18 @@ FONT_CANDIDATES = [
 def font(size, bold=True):
     for p in FONT_CANDIDATES:
         if p and Path(p).exists():
-            if p.endswith("AppleSDGothicNeo.ttc"):
-                # ttc 안의 Bold(6) / Regular(0)
-                return ImageFont.truetype(p, size, index=6 if bold else 0)
+            if p.endswith(".ttc"):
+                # ttc 안에서 이름으로 Bold / Regular 면을 찾음 (AppleSDGothicNeo: Bold=6, Regular=0)
+                want = "Bold" if bold else "Regular"
+                for i in range(32):
+                    try:
+                        f = ImageFont.truetype(p, size, index=i)
+                    except OSError:
+                        break
+                    fam, style = f.getname()
+                    if style == want and not fam.startswith("."):
+                        return f
+                return ImageFont.truetype(p, size, index=0)
             return ImageFont.truetype(p, size)
     raise SystemExit("한글 폰트를 찾지 못했어요. DB_FONT 환경변수로 지정해 주세요.")
 

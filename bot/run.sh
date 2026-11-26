@@ -2,7 +2,7 @@
 # launchd가 부르는 진입점.  run.sh collect | run.sh publish [public|private]
 set -u
 cd "$(dirname "$0")"
-PY=${DB_PY:-/opt/homebrew/bin/python3.12}
+PY=${DB_BOT_PY:-$HOME/daily-bytes-bot/venv/bin/python}   # 봇 스크립트는 venv (last30days는 config.PY)
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 DATE=$(date +%F)
 LOG="$HOME/daily-bytes-bot/logs"; mkdir -p "$LOG"

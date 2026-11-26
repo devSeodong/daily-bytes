@@ -25,9 +25,16 @@ def browser(p, headless=False):
 
 
 def logged_in(page):
+    # 비로그인이면 JS로 늦게 로그인 페이지로 튕기므로 충분히 기다린 뒤, 관리 화면 요소까지 확인
     page.goto(f"{BLOG}/manage/posts", wait_until="domcontentloaded")
-    time.sleep(2)
-    return "/manage" in page.url and "login" not in page.url
+    try:
+        page.wait_for_load_state("networkidle", timeout=15000)
+    except PWTimeout:
+        pass
+    time.sleep(3)
+    if "login" in page.url or "/manage" not in page.url:
+        return False
+    return page.locator("a[href*='/manage/newpost']").count() > 0
 
 
 def do_login(p):
@@ -43,9 +50,22 @@ def do_login(p):
         time.sleep(2)
     except PWTimeout:
         pass
+    try:  # 로그인 상태 유지 (세션을 오래 살려 매일 발행이 끊기지 않게)
+        page.get_by_text("로그인 상태 유지").first.click(timeout=3000)
+    except Exception:
+        pass
     shot = BOT / "work" / "login-qr.png"; shot.parent.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(shot))
-    print(f"QR 화면: {shot}  (카카오톡으로 스캔하면 됩니다. 5분 기다려요)")
+    expiry = time.strftime("%H:%M:%S", time.localtime(time.time() + 300))
+    print(f"QR 화면: {shot}  (카카오톡으로 스캔, {expiry}까지 유효)", flush=True)
+    try:  # 원격에서 보낼 수 있게 QR 내용도 텍스트로 (opencv 있으면)
+        import cv2
+        txt, _, _ = cv2.QRCodeDetector().detectAndDecode(cv2.imread(str(shot)))
+        if txt:
+            (BOT / "work" / "login-qr.txt").write_text(f"{txt}\n{expiry}\n", encoding="utf-8")
+            print("QR 텍스트: work/login-qr.txt", flush=True)
+    except Exception:
+        pass
     for _ in range(60):
         time.sleep(5)
         if "tistory.com" in page.url and "login" not in page.url:

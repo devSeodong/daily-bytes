@@ -5,7 +5,7 @@ python3.12 archive.py --date 2026-11-26 [--no-push]
 """
 import argparse, json, re, subprocess, sys, tempfile
 from pathlib import Path
-from config import ARCHIVE_REPO, CATS, PY, day_dir, notify, read_meta, strip_meta
+from config import ARCHIVE_REPO, BOT_PY, CATS, day_dir, notify, read_meta, strip_meta
 
 
 def git(*args):
@@ -34,7 +34,7 @@ def main():
         meta = read_meta(raw)
         with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as tmp:
             tmp.write(strip_meta(raw))
-        cmd = [PY, str(ARCHIVE_REPO / "scripts/add_post.py"), "--category", CATS[key]["slug"], "--date", a.date,
+        cmd = [BOT_PY, str(ARCHIVE_REPO / "scripts/add_post.py"), "--category", CATS[key]["slug"], "--date", a.date,
                "--slug", slugify(meta, info["title"]), "--title", info["title"], "--url", info["url"],
                "--tags", ",".join(info["tags"]), "--html", tmp.name]
         cover = d / "covers" / f"{key}-cover.png"

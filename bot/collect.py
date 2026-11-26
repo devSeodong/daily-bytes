@@ -21,7 +21,8 @@ TOP = 8
 
 
 def load_env():
-    env = dict(os.environ)
+    # CLAUDECODE 등이 있으면 last30days가 "에이전트가 --plan을 넘겨라"(LAW 7)며 수집 전에 멈춰요 → 지움
+    env = {k: v for k, v in os.environ.items() if not k.startswith("CLAUDE")}
     if LAST30_ENV.exists():
         for line in LAST30_ENV.read_text().splitlines():
             if "=" in line and not line.strip().startswith("#"):
@@ -37,12 +38,15 @@ def get_json(url, headers=None, timeout=30):
 
 
 def last30(query, days, env):
-    cmd = [PY, str(LAST30), "--days", str(days), "--store", "--emit", "compact", "--quick", query]
+    cmd = [PY, str(LAST30), "--research-only", "--no-browser-cookies", "--days", str(days),
+           "--store", "--emit", "compact", "--quick", query]
     try:
-        out = subprocess.run(cmd, capture_output=True, text=True, timeout=600, env=env).stdout
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=600, env=env)
     except subprocess.TimeoutExpired:
         return {"query": query, "error": "timeout"}
-    return {"query": query, "text": out.strip()[:L30_CHARS]}
+    if r.returncode != 0 or not r.stdout.strip():
+        return {"query": query, "error": f"rc={r.returncode}: {r.stderr.strip()[-300:]}"}
+    return {"query": query, "text": r.stdout.strip()[:L30_CHARS]}
 
 
 def brave(query, env, days):
@@ -87,7 +91,10 @@ def main():
     ap.add_argument("--skip-last30", action="store_true")
     a = ap.parse_args()
     env = load_env()
-    res = {"date": a.date, "days": a.days, "generated": dt.datetime.now().isoformat(timespec="seconds"), "categories": {}}
+    res = {"date": a.date, "days": a.days, "generated": dt.datetime.now().isoformat(timespec="seconds"),
+           "warnings": [], "categories": {}}
+    if not env.get("BRAVE_API_KEY"):
+        res["warnings"].append("BRAVE_API_KEY가 비어 있어 Brave 뉴스는 건너뛰었어요 (~/.config/last30days/.env)")
     for cat, qs in QUERIES.items():
         c = {"last30days": [] if a.skip_last30 else [last30(q, a.days, env) for q in qs],
              "brave_news": [x for q in BRAVE_Q.get(cat, []) for x in brave(q, env, a.days)]}

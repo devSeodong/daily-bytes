@@ -9,7 +9,8 @@ PROFILE = BOT / "browser-profile"        # Playwright 전용 로그인 프로필
 ARCHIVE_REPO = Path(os.environ.get("DB_ARCHIVE_REPO", HOME / "daily-bytes"))  # devSeodong/daily-bytes 클론
 LAST30 = HOME / ".claude/skills/last30days/scripts/last30days.py"
 LAST30_ENV = HOME / ".config/last30days/.env"
-PY = os.environ.get("DB_PY", "/opt/homebrew/bin/python3.12")
+PY = os.environ.get("DB_PY", "/opt/homebrew/bin/python3.12")      # last30days 실행용 (시스템 python3.12)
+BOT_PY = os.environ.get("DB_BOT_PY", str(BOT / "venv/bin/python"))  # 봇 스크립트/add_post.py용 venv (pillow, playwright, bs4)
 BLOG = "https://dongseodong.tistory.com"
 
 # 파일 번호 → 카테고리 정보
@@ -30,7 +31,7 @@ def notify(title: str, msg: str):
     """맥 알림 + status 파일. 클라우드 쪽 AI가 status.json을 읽어 사용자에게 알려요."""
     import json, subprocess, time
     try:
-        subprocess.run(["osascript", "-e", f'display notification {json.dumps(msg)} with title {json.dumps(title)} sound name "Glass"'], timeout=10)
+        subprocess.run(["osascript", "-e", f'display notification {json.dumps(msg, ensure_ascii=False)} with title {json.dumps(title, ensure_ascii=False)} sound name "Glass"'], timeout=10)
     except Exception:
         pass
     st = BOT / "status.json"
