@@ -12,19 +12,38 @@ from config import CATS, day_dir, read_meta
 
 W, H = 1200, 630
 BG = (15, 23, 42)
+FONT_DIRS = [Path.home() / "Library/Fonts", Path("/Library/Fonts"), Path("/usr/share/fonts/truetype/noto")]
 FONT_CANDIDATES = [
     os.environ.get("DB_FONT", ""),
     "/System/Library/Fonts/AppleSDGothicNeo.ttc",
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
-    "/usr/share/fonts/truetype/noto/NotoSansKR-Bold.ttf",
 ]
 
 
+def noto(size, style):
+    """기존 대표 이미지와 같은 Noto Sans KR이 설치돼 있으면 우선 사용 (정적 Bold/Regular 파일 또는 가변 폰트)."""
+    for d in FONT_DIRS:
+        f = d / f"NotoSansKR-{style}.ttf"
+        if f.exists():
+            return ImageFont.truetype(str(f), size)
+        for v in list(d.glob("NotoSansKR*wght*.ttf")) + list(d.glob("NotoSansKR-VariableFont*.ttf")):
+            try:
+                font_ = ImageFont.truetype(str(v), size)
+                font_.set_variation_by_name(style)
+                return font_
+            except Exception:
+                continue
+    return None
+
+
 def font(size, bold=True, weight=None):
+    f = noto(size, "Bold" if bold else "Regular")
+    if f:
+        return f
     for p in FONT_CANDIDATES:
         if p and Path(p).exists():
             if p.endswith(".ttc"):
-                # ttc 안에서 이름으로 Bold / Regular 면을 찾음 (AppleSDGothicNeo: Bold=6, Regular=0)
+                # ttc 안에서 이름으로 면을 찾음. Apple SD Gothic Neo는 Noto보다 얇아 제목은 ExtraBold로
                 want = weight or ("Bold" if bold else "Regular")
                 for i in range(32):
                     try:
@@ -36,7 +55,7 @@ def font(size, bold=True, weight=None):
                         return f
                 return ImageFont.truetype(p, size, index=0)
             return ImageFont.truetype(p, size)
-    raise SystemExit("한글 폰트를 찾지 못했어요. DB_FONT 환경변수로 지정해 주세요.")
+    raise SystemExit("한글 폰트를 찾지 못했어요. Noto Sans KR을 설치하거나 DB_FONT 환경변수로 지정해 주세요.")
 
 
 def hex2rgb(h):
