@@ -52,7 +52,7 @@ def main():
 
     L = []
     L.append("# 📚 daily-bytes\n")
-    L.append("> 매일 한 입(byte)씩 쌓이는 IT 기록. [서동이의 코딩일기]({}) **오늘의 IT** 시리즈 아카이브예요.\n".format(BLOG))
+    L.append("> 매일 한 입(byte)씩 쌓이는 IT 기록. [서동이의 코딩일기]({}) **오늘의 IT** 시리즈와 **AI 활용** 경험 글 아카이브예요.\n".format(BLOG))
     L.append(f"![posts](https://img.shields.io/badge/posts-{len(all_posts)}-7C5CFF) "
              f"![days](https://img.shields.io/badge/days-{len(dates)}-10B981) "
              f"![updated](https://img.shields.io/badge/updated-{dates[0].replace('-', '--') if dates else 'none'}-F59E0B)\n")
