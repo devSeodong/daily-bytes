@@ -106,8 +106,11 @@ def main():
     d = day_dir(a.date); (d / "covers").mkdir(exist_ok=True)
     for f in sorted((d / "drafts").glob("*.html")):
         if f.stem in CATS:
+            out = d / "covers" / f"{f.stem}-cover.png"
+            if out.exists() and out.stat().st_mtime >= f.stat().st_mtime:
+                print(f"{out} (이미 있음)"); continue
             meta = read_meta(f.read_text(encoding="utf-8"))
-            print(render(f.stem, cover_text(meta), a.date, d / "covers" / f"{f.stem}-cover.png"))
+            print(render(f.stem, cover_text(meta), a.date, out))
 
 
 if __name__ == "__main__":

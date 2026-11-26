@@ -2,9 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
   <key>Label</key><string>com.dailybytes.publish</string>
+  <!-- 20:40 예비 실행: AI 데일리 실행이 19:25~19:55에 초안을 쓰고 직접 run.sh publish를 부름. 이미 발행한 글은 건너뜀 -->
   <key>ProgramArguments</key><array>
     <string>/bin/bash</string><string>__BOT_DIR__/run.sh</string><string>publish</string><string>__VIS__</string>
   </array>
-  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>0</integer></dict>
+  <key>StartCalendarInterval</key><dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>40</integer></dict>
   <key>RunAtLoad</key><false/>
+  <key>LimitLoadToSessionType</key><string>Aqua</string>  <!-- 로그인한 GUI 세션에서 실행 (headful Chromium) -->
 </dict></plist>

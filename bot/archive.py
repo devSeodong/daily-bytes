@@ -30,6 +30,10 @@ def main():
     for key, info in pub.items():
         if info.get("visibility") != "public" or not info.get("url"):
             continue  # 테스트(비공개) 글은 보관 안 함
+        y, m = a.date[:4], a.date[5:7]
+        done = list((ARCHIVE_REPO / CATS[key]["slug"] / y / m).glob(f"{a.date}-*.md"))
+        if done:
+            print(f"{key}: 이미 보관됨 ({done[0].name}), 건너뜀"); continue
         raw = (d / "drafts" / f"{key}.html").read_text(encoding="utf-8")
         meta = read_meta(raw)
         with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as tmp:
@@ -41,16 +45,19 @@ def main():
         if cover.exists():
             cmd += ["--cover", str(cover)]
         subprocess.run(cmd, check=True); added += 1
-    if not added:
-        print("보관할 공개 글이 없어요"); return
-    git("add", "-A")
-    git("commit", "-m", f"📝 {a.date} 오늘의 IT {added}편")
+    if added:
+        git("add", "-A")
+        if git("status", "--porcelain").strip():
+            git("commit", "-m", f"📝 {a.date} 오늘의 IT {added}편")
+    ahead = int(git("rev-list", "--count", "origin/main..main").strip() or 0)
+    if not ahead:
+        print("새로 보관할 공개 글이 없어요"); return
     if not a.no_push:
         try:
             git("push", "origin", "main")
         except subprocess.CalledProcessError as e:
             notify("daily-bytes 깃허브 push 실패", e.stderr[:200]); sys.exit(1)
-    print(f"{added}편 보관 완료")
+    print(f"{added}편 보관 완료 (push 대기 커밋 {ahead}개)")
 
 
 if __name__ == "__main__":
