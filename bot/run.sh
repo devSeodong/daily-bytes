@@ -23,6 +23,8 @@ case "${1:-}" in
   collect) "$PY" collect.py --date "$DATE"; rc=$? ;;
   publish)
     VIS=${2:-public}
+    START=${DB_START:-2026-11-27}   # 공개 배치 시작일. 그 전에는 공개 발행 안 함
+    if [ "$VIS" = public ] && [[ "$DATE" < "$START" ]]; then echo "공개 배치는 $START부터 → 건너뜀"; echo "===== done rc=0"; exit 0; fi
     "$PY" thumb.py --date "$DATE" && "$PY" publish.py --date "$DATE" --visibility "$VIS"; rc=$?
     if [ $rc -eq 0 ] && [ "$VIS" = public ]; then
       "$PY" archive.py --date "$DATE"; rc=$?
