@@ -10,7 +10,7 @@ python3.12 publish.py --check        # 로그인 살아 있는지만 확인 (0=O
 """
 import argparse, base64, json, re, sys, time
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
-from config import BLOG, BOT, CATS, PROFILE, day_dir, notify, read_meta, strip_meta
+from config import BLOG, BOT, CATS, PROFILE, day_dir, notify, read_meta, strip_meta, todays_key
 
 VIS = {"public": "#open20", "protected": "#open15", "private": "#open0"}
 STATE = BOT / "state.json"   # 로그인 쿠키 백업 (권한 600). 세션 쿠키도 브라우저 재시작 뒤 되살린다.
@@ -205,8 +205,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--date"); ap.add_argument("--visibility", choices=list(VIS), default="public")
     ap.add_argument("--login", action="store_true"); ap.add_argument("--check", action="store_true")
-    ap.add_argument("--only", help="예: 01-ai-issue")
+    ap.add_argument("--only", help="예: 01-ai-issue (기본: 그날 요일의 카테고리 하나)")
+    ap.add_argument("--all", action="store_true", help="요일 상관없이 drafts의 모든 초안 발행")
     a = ap.parse_args()
+    if a.date and not (a.only or a.all or a.login or a.check):
+        a.only = todays_key(a.date)
+        if a.only is None:
+            print(f"{a.date} 일요일 휴재 → 발행 안 함"); return
     with sync_playwright() as p:
         if a.login:
             sys.exit(0 if do_login(p) else 2)
@@ -221,8 +226,13 @@ def main():
         d = day_dir(a.date); out = d / "published.json"
         done = json.loads(out.read_text()) if out.exists() else {}
         drafts = sorted((d / "drafts").glob("*.html"))
+        if a.only:
+            drafts = [f for f in drafts if f.stem == a.only]
+        if a.only and a.only in done:
+            ctx.close(); print(f"{a.only} 이미 발행됨: {done[a.only].get('url')}"); return
         if not drafts:
-            notify("daily-bytes 발행 보류", f"{a.date} 초안이 없어요"); sys.exit(3)
+            ctx.close()
+            notify("daily-bytes 발행 보류", f"{a.date} 초안이 없어요 ({a.only or '전체'})"); sys.exit(3)
         errors = []
         for f in drafts:
             key = f.stem

@@ -18,6 +18,9 @@ if ! mkdir "$LOCK" 2>/dev/null; then
 fi
 trap 'rm -rf "$LOCK"' EXIT
 
+# 일요일은 휴재 (요일제: 월·목 AI 이슈 / 화·금 개발 이슈 / 수·토 AI 트렌드)
+if [ "$(date +%u)" = 7 ]; then echo "일요일 휴재 → 종료"; echo "===== done rc=0"; exit 0; fi
+
 rc=0
 case "${1:-}" in
   collect) "$PY" collect.py --date "$DATE"; rc=$? ;;
