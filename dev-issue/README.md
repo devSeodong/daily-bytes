@@ -7,6 +7,7 @@
 
 ## 2026-11
 
+- 2026-11-27 · [PostgreSQL 19 정식 배포와 14 지원 종료, Angular 22.3](2026/11/2026-11-27-postgresql-19-release-pg14-eol-angular-22-3.md) · [티스토리](https://dongseodong.tistory.com/71)
 - 2026-11-26 · [12월 지원 종료 3종: Docker Engine 25.0, 리눅스 커널 5.15, Spring Boot 4.0](2026/11/2026-11-26-december-eol-docker-kernel-springboot.md) · [티스토리](https://dongseodong.tistory.com/70)
 - 2026-11-25 · [Node.js 보안 릴리스 HIGH 7건, 패치 전까지 버티는 eBPF 방어막 Shirudo](2026/11/2026-11-25-nodejs-security-release-shirudo.md) · [티스토리](https://dongseodong.tistory.com/64)
 - 2026-11-24 · [.NET 8 지원 종료, PostgreSQL 14 EOL, 지금 무엇을 해야 할까](2026/11/2026-11-24-dotnet8-postgresql14-eol.md) · [티스토리](https://dongseodong.tistory.com/61)
