@@ -1,18 +1,22 @@
 <!-- 이 README는 scripts/build_readme.py가 자동으로 만듭니다. 직접 고치지 말고 스크립트를 고쳐 주세요. -->
 # 📚 daily-bytes
 
-> 매일 한 입(byte)씩 쌓이는 IT 기록. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글 아카이브예요.
+> 매일 한 입(byte)씩 쌓이는 IT 기록이다. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글을 모아 둔 아카이브다.
 
 ![posts](https://img.shields.io/badge/posts-11-7C5CFF) ![days](https://img.shields.io/badge/days-3-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--26-F59E0B)
 
-매일 저녁 8시(KST), 티스토리에 세 편이 올라오면 이곳에도 마크다운으로 함께 쌓여요.
+매일 저녁 8시(KST)에 티스토리로 한 편을 발행하고, 같은 글을 이곳에도 마크다운으로 함께 쌓는다. 요일마다 카테고리가 정해져 있다.
 
-| 카테고리 | 내용 | 글 수 |
-|---|---|---|
-| 🤖 [AI 이슈](./ai-issue) | 그날 가장 의미 있는 AI 뉴스를 깊게 | 3 |
-| 📈 [AI 트렌드](./ai-trend) | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 3 |
-| 🛠️ [개발 이슈](./dev-issue) | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 3 |
-| 🧪 [AI 활용](./ai-usage) | Claude로 직접 만들고 자동화해 본 경험 기록 | 2 |
+| 요일 | 월 | 화 | 수 | 목 | 금 | 토 | 일 |
+|---|---|---|---|---|---|---|---|
+| 카테고리 | 🤖 AI 이슈 | 🛠️ 개발 이슈 | 📈 AI 트렌드 | 🤖 AI 이슈 | 🛠️ 개발 이슈 | 📈 AI 트렌드 | 휴재 |
+
+| 카테고리 | 발행 요일 | 내용 | 글 수 |
+|---|---|---|---|
+| 🤖 [AI 이슈](./ai-issue) | 월·목 | 그날 가장 의미 있는 AI 뉴스를 깊게 | 3 |
+| 📈 [AI 트렌드](./ai-trend) | 수·토 | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 3 |
+| 🛠️ [개발 이슈](./dev-issue) | 화·금 | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 3 |
+| 🧪 [AI 활용](./ai-usage) | 비정기 | Claude로 직접 만들고 자동화해 본 경험 기록 | 2 |
 
 ## 🗓️ 최근 7일
 
@@ -43,4 +47,4 @@
 <카테고리>/<연>/<월>/assets/   # 대표 이미지
 ```
 
-📝 매일 새 글은 [티스토리](https://dongseodong.tistory.com/)에서 먼저 만나보세요!
+📝 새 글은 [티스토리](https://dongseodong.tistory.com/)에 먼저 올라온다.
