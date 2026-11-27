@@ -62,8 +62,103 @@ def logged_in(page):
     return page.locator("a[href*='/manage/post']").count() > 0
 
 
+STAY_TXT = "로그인 상태 유지"
+
+
+def stay_box(page):
+    """'로그인 상태 유지' 체크박스 locator. 카카오가 id/name을 바꿔도 라벨 글자로 찾아낸다."""
+    for sel in ("input#staySignedIn", "input[name='stay_signed_in']", "input[name='staySignedIn']"):
+        box = page.locator(sel).first
+        try:
+            if box.count():
+                return box
+        except Exception:
+            pass
+    # 라벨 글자 → for 속성 → 그 input
+    try:
+        lab = page.locator(f"label:has-text('{STAY_TXT}')").first
+        if lab.count():
+            fid = lab.get_attribute("for")
+            if fid:
+                box = page.locator(f"#{fid}").first
+                if box.count():
+                    return box
+            box = lab.locator("input[type=checkbox]").first
+            if box.count():
+                return box
+    except Exception:
+        pass
+    return None
+
+
+def ensure_stay(page):
+    """QR을 띄우기 '전에' 로그인 상태 유지를 켠다. 되는 방법이 나올 때까지 차례로 시도한다."""
+    box = stay_box(page)
+    if box is None:
+        print("로그인 상태 유지: 체크박스를 못 찾음", flush=True)
+        return False
+    try:
+        if box.is_checked():
+            print("로그인 상태 유지: True (이미 켜져 있음)", flush=True)
+            return True
+    except Exception:
+        pass
+    attempts = [
+        ("check()", lambda: box.check(timeout=3000, force=True)),
+        ("label click", lambda: page.locator(f"label:has-text('{STAY_TXT}')").first.click(timeout=3000)),
+        ("input click", lambda: box.click(timeout=3000, force=True)),
+        ("js click", lambda: box.evaluate("el => el.click()")),
+        ("js set+event", lambda: box.evaluate(
+            "el => { el.checked = true;"
+            " el.dispatchEvent(new Event('input', {bubbles:true}));"
+            " el.dispatchEvent(new Event('change', {bubbles:true})); }")),
+    ]
+    for name, fn in attempts:
+        try:
+            fn()
+        except Exception as e:
+            print(f"로그인 상태 유지: {name} 실패 ({type(e).__name__})", flush=True)
+            continue
+        try:
+            if box.is_checked():
+                print(f"로그인 상태 유지: True ({name})", flush=True)
+                return True
+        except Exception:
+            pass
+        print(f"로그인 상태 유지: {name} 눌렀지만 체크 안 됨", flush=True)
+    try:   # 다음 로그인 때 원인을 바로 알 수 있게 DOM을 남긴다
+        print("체크박스 DOM:", box.evaluate("el => el.outerHTML")[:300], flush=True)
+        print("라벨 DOM:", page.locator(f"label:has-text('{STAY_TXT}')").first
+              .evaluate("el => el.outerHTML")[:300], flush=True)
+    except Exception:
+        pass
+    return False
+
+
+def force_stay_url(page):
+    """체크박스가 안 먹었을 때: QR 주소의 append_stay_signed_in=false 를 true 로 바꿔 다시 띄운다."""
+    if "append_stay_signed_in=false" not in page.url:
+        return False
+    url = page.url.replace("append_stay_signed_in=false", "append_stay_signed_in=true")
+    try:
+        page.goto(url, wait_until="domcontentloaded")
+        time.sleep(2)
+        ok = "append_stay_signed_in=true" in page.url
+        print("QR 주소 보정:", "성공" if ok else f"실패 ({page.url[:120]})", flush=True)
+        return ok
+    except Exception as e:
+        print("QR 주소 보정 실패:", e, flush=True)
+        return False
+
+
 def do_login(p):
-    ctx, page = browser(p)
+    try:
+        ctx, page = browser(p)
+    except Exception as e:
+        # 앞서 띄운 로그인 브라우저가 아직 프로필을 쓰고 있으면 여기서 바로 죽는다.
+        print("로그인 창을 열 수 없어요. 이미 열려 있는 로그인 브라우저를 먼저 닫아 주세요.", flush=True)
+        print("  원인:", type(e).__name__, str(e)[:200], flush=True)
+        return False
     page.goto("https://www.tistory.com/auth/login", wait_until="domcontentloaded")
     try:
         page.click("a.btn_login.link_kakao_id", timeout=8000)
@@ -72,25 +167,23 @@ def do_login(p):
     time.sleep(3)
     # '로그인 상태 유지'는 QR 탭을 열기 '전에' 체크해야 QR 요청에 반영된다 (append_stay_signed_in=true).
     # 나중에 체크하면 세션 쿠키로만 저장돼 브라우저를 닫는 순간 로그아웃된다.
-    stay = False
-    try:
-        box = page.locator("input[name='stay_signed_in'], input#staySignedIn").first
-        if not box.is_checked():
-            page.get_by_text("로그인 상태 유지").first.click(timeout=3000)
-        stay = box.is_checked()
-    except Exception:
-        try:
-            page.get_by_text("로그인 상태 유지").first.click(timeout=3000); stay = True
-        except Exception:
-            pass
-    print("로그인 상태 유지:", stay, flush=True)
+    ensure_stay(page)
     try:  # 카카오 QR 로그인 탭
         page.get_by_text("QR코드 로그인").first.click(timeout=5000)
         time.sleep(2)
     except PWTimeout:
         pass
     if "append_stay_signed_in=false" in page.url:
-        print("경고: QR 주소에 append_stay_signed_in=false — 로그인 상태 유지가 적용 안 됐어요", flush=True)
+        # 체크박스가 안 먹은 경우. 주소를 직접 바로잡고, 그래도 안 되면 체크 후 QR을 다시 띄운다.
+        if not force_stay_url(page):
+            if ensure_stay(page):
+                try:
+                    page.get_by_text("QR코드 로그인").first.click(timeout=5000)
+                    time.sleep(2)
+                except PWTimeout:
+                    pass
+    print("QR 주소 상태 유지:",
+          "true" if "append_stay_signed_in=true" in page.url else page.url[:120], flush=True)
     shot = BOT / "work" / "login-qr.png"; shot.parent.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(shot))
     expiry = time.strftime("%H:%M:%S", time.localtime(time.time() + 300))
