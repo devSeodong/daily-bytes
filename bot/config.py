@@ -20,6 +20,16 @@ CATS = {
     "03-cs-dev-issue": {"slug": "dev-issue", "label": "개발 이슈", "head": "오늘의 CS/개발 이슈", "color": "#F59E0B"},
 }
 
+# 요일별 발행 (2026-11-27부터 하루 1편). datetime.weekday(): 월=0 ... 일=6. 일요일은 휴재.
+SCHEDULE = {0: "01-ai-issue", 3: "01-ai-issue", 1: "03-cs-dev-issue", 4: "03-cs-dev-issue",
+            2: "02-ai-trend", 5: "02-ai-trend"}
+
+
+def todays_key(date: str):
+    """그날 발행할 초안 키. 일요일이면 None."""
+    import datetime as _dt
+    return SCHEDULE.get(_dt.date.fromisoformat(date).weekday())
+
 
 def day_dir(date: str) -> Path:
     d = WORK / date

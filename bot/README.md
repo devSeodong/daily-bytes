@@ -5,8 +5,11 @@
 | 시각 (KST) | 단계 | 담당 |
 |---|---|---|
 | 19:00 | `collect.py` 리서치 수집 → `work/<날짜>/research.json` | launchd |
-| 19:15 | research.json 읽고 3편 HTML 작성 → `work/<날짜>/drafts/0N-*.html` | AI |
+| 19:21 | research.json 읽고 그날 1편 HTML 작성 → `work/<날짜>/drafts/0N-*.html` | AI |
 | 20:00 | `thumb.py` 대표 이미지 → `publish.py` 발행 → `archive.py` 깃허브 보관 | launchd |
+
+## 요일제 (2026-11-27부터 하루 1편)
+월·목 `01-ai-issue` / 화·금 `03-cs-dev-issue` / 수·토 `02-ai-trend` / 일요일 휴재. `config.SCHEDULE`에서 바꿀 수 있어요. 수집·발행 모두 그날 카테고리 하나만 처리하고, 일요일엔 `run.sh`가 바로 끝나요. 요일과 상관없이 돌리려면 `collect.py --all`, `publish.py --all`.
 
 ## 초안 파일 규칙
 `drafts/01-ai-issue.html`, `02-ai-trend.html`, `03-cs-dev-issue.html`. 맨 위 주석:

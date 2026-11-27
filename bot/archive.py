@@ -48,7 +48,9 @@ def main():
     if added:
         git("add", "-A")
         if git("status", "--porcelain").strip():
-            git("commit", "-m", f"📝 {a.date} 오늘의 IT {added}편")
+            labels = [CATS[k]["label"] for k, i in pub.items() if i.get("visibility") == "public" and i.get("url")]
+            msg = f"📝 {a.date} 오늘의 IT: {labels[0]}" if added == 1 and labels else f"📝 {a.date} 오늘의 IT {added}편"
+            git("commit", "-m", msg)
     ahead = int(git("rev-list", "--count", "origin/main..main").strip() or 0)
     if not ahead:
         print("새로 보관할 공개 글이 없어요"); return

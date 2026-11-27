@@ -5,7 +5,7 @@
 python3.12 collect.py [--date YYYY-MM-DD] [--days 7]
 """
 import argparse, datetime as dt, json, os, subprocess, urllib.parse, urllib.request
-from config import LAST30, LAST30_ENV, PY, day_dir, notify
+from config import CATS, LAST30, LAST30_ENV, PY, day_dir, notify, todays_key
 
 QUERIES = {
     "ai-issue":  ["AI news this week", "LLM model release", "AI policy regulation"],
@@ -89,13 +89,20 @@ def main():
     ap.add_argument("--date", default=dt.date.today().isoformat())
     ap.add_argument("--days", type=int, default=7)
     ap.add_argument("--skip-last30", action="store_true")
+    ap.add_argument("--all", action="store_true", help="요일 상관없이 세 카테고리 모두 수집")
     a = ap.parse_args()
+    key = todays_key(a.date)
+    if key is None and not a.all:
+        print(f"{a.date} 일요일 휴재 → 수집 건너뜀"); return
+    only = None if a.all else CATS[key]["slug"]
     env = load_env()
     res = {"date": a.date, "days": a.days, "generated": dt.datetime.now().isoformat(timespec="seconds"),
            "warnings": [], "categories": {}}
     if not env.get("BRAVE_API_KEY"):
         res["warnings"].append("BRAVE_API_KEY가 비어 있어 Brave 뉴스는 건너뛰었어요 (~/.config/last30days/.env)")
     for cat, qs in QUERIES.items():
+        if only and cat != only:
+            continue   # 오늘 발행할 카테고리만 수집
         c = {"last30days": [] if a.skip_last30 else [last30(q, a.days, env) for q in qs],
              "brave_news": [x for q in BRAVE_Q.get(cat, []) for x in brave(q, env, a.days)]}
         if cat == "ai-trend":
