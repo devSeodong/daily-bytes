@@ -1,11 +1,11 @@
 <!-- 이 README는 scripts/build_readme.py가 자동으로 만듭니다. 직접 고치지 말고 스크립트를 고쳐 주세요. -->
 # 📚 daily-bytes
 
-> 매일 한 입(byte)씩 쌓이는 IT 기록이다. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글을 모아 둔 아카이브다.
+> 매일 한 입(byte)씩 쌓이는 IT 기록입니다. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글을 모아 둔 아카이브입니다.
 
 ![posts](https://img.shields.io/badge/posts-12-7C5CFF) ![days](https://img.shields.io/badge/days-4-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--27-F59E0B)
 
-매일 저녁 8시(KST)에 티스토리로 한 편을 발행하고, 같은 글을 이곳에도 마크다운으로 함께 쌓는다. 요일마다 카테고리가 정해져 있다.
+매일 저녁 8시(KST)에 티스토리로 한 편을 발행하고, 같은 글을 이곳에도 마크다운으로 함께 쌓습니다. 요일마다 카테고리가 정해져 있습니다.
 
 | 요일 | 월 | 화 | 수 | 목 | 금 | 토 | 일 |
 |---|---|---|---|---|---|---|---|
@@ -51,4 +51,4 @@
 <카테고리>/<연>/<월>/assets/   # 대표 이미지
 ```
 
-📝 새 글은 [티스토리](https://dongseodong.tistory.com/)에 먼저 올라온다.
+📝 새 글은 [티스토리](https://dongseodong.tistory.com/)에 먼저 올라옵니다.
