@@ -5,7 +5,7 @@ python3.12 archive.py --date 2026-11-26 [--no-push]
 """
 import argparse, json, re, subprocess, sys, tempfile
 from pathlib import Path
-from config import ARCHIVE_REPO, BOT_PY, CATS, day_dir, notify, read_meta, strip_meta
+from config import ARCHIVE_REPO, BOT_PY, cat, day_dir, notify, read_meta, strip_meta
 
 
 def git(*args):
@@ -31,15 +31,18 @@ def main():
         if info.get("visibility") != "public" or not info.get("url"):
             continue  # 테스트(비공개) 글은 보관 안 함
         y, m = a.date[:4], a.date[5:7]
-        done = list((ARCHIVE_REPO / CATS[key]["slug"] / y / m).glob(f"{a.date}-*.md"))
-        if done:
-            print(f"{key}: 이미 보관됨 ({done[0].name}), 건너뜀"); continue
         raw = (d / "drafts" / f"{key}.html").read_text(encoding="utf-8")
         meta = read_meta(raw)
+        slug = slugify(meta, info["title"])
+        # 심층 시리즈는 하루에 여러 편이라 슬러그까지 맞춰 봄. 정규 글은 하루 한 편이라 날짜만.
+        pat = f"{a.date}-{slug}.md" if key.startswith("ai-deep-") else f"{a.date}-*.md"
+        done = list((ARCHIVE_REPO / cat(key)["slug"] / y / m).glob(pat))
+        if done:
+            print(f"{key}: 이미 보관됨 ({done[0].name}), 건너뜀"); continue
         with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as tmp:
             tmp.write(strip_meta(raw))
-        cmd = [BOT_PY, str(ARCHIVE_REPO / "scripts/add_post.py"), "--category", CATS[key]["slug"], "--date", a.date,
-               "--slug", slugify(meta, info["title"]), "--title", info["title"], "--url", info["url"],
+        cmd = [BOT_PY, str(ARCHIVE_REPO / "scripts/add_post.py"), "--category", cat(key)["slug"], "--date", a.date,
+               "--slug", slug, "--title", info["title"], "--url", info["url"],
                "--tags", ",".join(info["tags"]), "--html", tmp.name]
         cover = d / "covers" / f"{key}-cover.png"
         if cover.exists():
@@ -48,7 +51,7 @@ def main():
     if added:
         git("add", "-A")
         if git("status", "--porcelain").strip():
-            labels = [CATS[k]["label"] for k, i in pub.items() if i.get("visibility") == "public" and i.get("url")]
+            labels = [cat(k)["label"] for k, i in pub.items() if i.get("visibility") == "public" and i.get("url")]
             msg = f"📝 {a.date} 오늘의 IT: {labels[0]}" if added == 1 and labels else f"📝 {a.date} 오늘의 IT {added}편"
             git("commit", "-m", msg)
     ahead = int(git("rev-list", "--count", "origin/main..main").strip() or 0)

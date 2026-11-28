@@ -10,7 +10,7 @@ python3.12 publish.py --check        # 로그인 살아 있는지만 확인 (0=O
 """
 import argparse, base64, json, re, sys, time
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
-from config import BLOG, BOT, CATS, PROFILE, day_dir, notify, read_meta, strip_meta, todays_key
+from config import BLOG, BOT, CATS, PROFILE, cat, day_dir, notify, read_meta, strip_meta, todays_key
 
 VIS = {"public": "#open20", "protected": "#open15", "private": "#open0"}
 STATE = BOT / "state.json"   # 로그인 쿠키 백업 (권한 600). 세션 쿠키도 브라우저 재시작 뒤 되살린다.
@@ -305,7 +305,7 @@ def publish_one(page, key, draft, cover, vis):
         raise RuntimeError(f"{draft.name}: <!-- 제목 --> / <!-- 태그 --> 주석이 필요해요")
     page.goto(f"{BLOG}/manage/newpost/?type=post", wait_until="domcontentloaded")
     page.wait_for_selector("#post-title-inp", timeout=30000)
-    pick_category(page, CATS[key]["label"])
+    pick_category(page, cat(key)["label"])
     page.fill("#post-title-inp", title)
     set_body(page, strip_meta(raw), cover if cover.exists() else None)
     add_tags(page, tags)
@@ -365,7 +365,7 @@ def main():
         errors = []
         for f in drafts:
             key = f.stem
-            if key not in CATS or (a.only and key != a.only) or key in done:
+            if cat(key) is None or (a.only and key != a.only) or key in done:
                 continue
             try:
                 done[key] = publish_one(page, key, f, d / "covers" / f"{key}-cover.png", a.visibility)

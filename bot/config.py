@@ -20,6 +20,19 @@ CATS = {
     "03-cs-dev-issue": {"slug": "dev-issue", "label": "개발 이슈", "head": "오늘의 CS/개발 이슈", "color": "#F59E0B"},
 }
 
+# 비정기 심층 시리즈 (2026-11-28~): 초안 이름이 "ai-deep-"으로 시작하면 이 카테고리.
+# 같은 날 여러 편을 올릴 수 있도록 키(파일 이름)는 글마다 달라요. 예: ai-deep-01-riemann
+DEEP = {"slug": "ai-deep", "label": "AI 심층 분석", "head": "AI 심층 분석", "color": "#EC4899"}
+
+
+def cat(key: str):
+    """초안 키 → 카테고리 정보 (모르는 키면 None)."""
+    if key in CATS:
+        return CATS[key]
+    if key.startswith("ai-deep-"):
+        return DEEP
+    return None
+
 # 요일별 발행 (2026-11-27부터 하루 1편). datetime.weekday(): 월=0 ... 일=6. 일요일은 휴재.
 SCHEDULE = {0: "01-ai-issue", 3: "01-ai-issue", 1: "03-cs-dev-issue", 4: "03-cs-dev-issue",
             2: "02-ai-trend", 5: "02-ai-trend"}
