@@ -3,7 +3,7 @@
 
 > 매일 한 입(byte)씩 쌓이는 IT 기록입니다. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글을 모아 둔 아카이브입니다.
 
-![posts](https://img.shields.io/badge/posts-13-7C5CFF) ![days](https://img.shields.io/badge/days-5-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--28-F59E0B)
+![posts](https://img.shields.io/badge/posts-16-7C5CFF) ![days](https://img.shields.io/badge/days-5-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--28-F59E0B)
 
 매일 저녁 8시(KST)에 티스토리로 한 편을 발행하고, 같은 글을 이곳에도 마크다운으로 함께 쌓습니다. 요일마다 카테고리가 정해져 있습니다.
 
@@ -16,13 +16,16 @@
 | 🤖 [AI 이슈](./ai-issue) | 월·목 | 그날 가장 의미 있는 AI 뉴스를 깊게 | 3 |
 | 📈 [AI 트렌드](./ai-trend) | 수·토 | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 3 |
 | 🛠️ [개발 이슈](./dev-issue) | 화·금 | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 5 |
-| 🧪 [AI 활용](./ai-usage) | 비정기 | Claude로 직접 만들고 자동화해 본 경험 기록 | 2 |
+| 🧪 [AI 활용](./ai-usage) | 비정기 | Claude로 직접 만들고 자동화해 본 경험 기록 | 5 |
 
 ## 🗓️ 최근 7일
 
 ### 2026-11-28
 
 - 🛠️ **개발 이슈** · [한 달 만에 또, 세션과 FPM을 노린 치명적 결함 9건](dev-issue/2026/11/2026-11-28-php-november-2026-critical-security-release.md) · [티스토리](https://dongseodong.tistory.com/72)
+- 🧪 **AI 활용** · [취업 도우미 에이전트 개발기 1편 · 기획 (Figma, Notion)](ai-usage/2026/11/2026-11-28-job-helper-01-plan.md) · [티스토리](https://dongseodong.tistory.com/73)
+- 🧪 **AI 활용** · [취업 도우미 에이전트 개발기 2편 · 설계 (FastAPI, SQLite)](ai-usage/2026/11/2026-11-28-job-helper-02-design.md) · [티스토리](https://dongseodong.tistory.com/74)
+- 🧪 **AI 활용** · [취업 도우미 에이전트 개발기 3편 · 개발 (Notion OAuth, GitHub Actions)](ai-usage/2026/11/2026-11-28-job-helper-03-dev.md) · [티스토리](https://dongseodong.tistory.com/75)
 
 ### 2026-11-27
 
