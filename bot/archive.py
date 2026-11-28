@@ -27,6 +27,7 @@ def main():
     pub = json.loads((d / "published.json").read_text())
     git("checkout", "main"); git("pull", "--ff-only")
     added = 0
+    added_labels = []
     for key, info in pub.items():
         if info.get("visibility") != "public" or not info.get("url"):
             continue  # 테스트(비공개) 글은 보관 안 함
@@ -48,11 +49,13 @@ def main():
         if cover.exists():
             cmd += ["--cover", str(cover)]
         subprocess.run(cmd, check=True); added += 1
+        added_labels.append(cat(key)["label"])
     if added:
         git("add", "-A")
         if git("status", "--porcelain").strip():
-            labels = [cat(k)["label"] for k, i in pub.items() if i.get("visibility") == "public" and i.get("url")]
-            msg = f"📝 {a.date} 오늘의 IT: {labels[0]}" if added == 1 and labels else f"📝 {a.date} 오늘의 IT {added}편"
+            # 그날 이미 보관된 글이 아니라, 이번에 새로 보관한 글의 카테고리를 적는다.
+            msg = (f"📝 {a.date} 오늘의 IT: {added_labels[0]}"
+                   if added == 1 and added_labels else f"📝 {a.date} 오늘의 IT {added}편")
             git("commit", "-m", msg)
     ahead = int(git("rev-list", "--count", "origin/main..main").strip() or 0)
     if not ahead:
