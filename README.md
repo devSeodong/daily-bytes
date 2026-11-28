@@ -3,7 +3,7 @@
 
 > 매일 한 입(byte)씩 쌓이는 IT 기록입니다. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글을 모아 둔 아카이브입니다.
 
-![posts](https://img.shields.io/badge/posts-26-7C5CFF) ![days](https://img.shields.io/badge/days-5-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--28-F59E0B)
+![posts](https://img.shields.io/badge/posts-27-7C5CFF) ![days](https://img.shields.io/badge/days-5-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--28-F59E0B)
 
 매일 저녁 8시(KST)에 티스토리로 한 편을 발행하고, 같은 글을 이곳에도 마크다운으로 함께 쌓습니다. 요일마다 카테고리가 정해져 있습니다.
 
@@ -14,7 +14,7 @@
 | 카테고리 | 발행 요일 | 내용 | 글 수 |
 |---|---|---|---|
 | 🤖 [AI 이슈](./ai-issue) | 월·목 | 그날 가장 의미 있는 AI 뉴스를 깊게 | 3 |
-| 📈 [AI 트렌드](./ai-trend) | 수·토 | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 3 |
+| 📈 [AI 트렌드](./ai-trend) | 수·토 | GitHub 스타로 보는 요즘 뜨는 AI 레포 | 4 |
 | 🛠️ [개발 이슈](./dev-issue) | 화·금 | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 5 |
 | 🔬 [AI 심층 분석](./ai-deep) | 비정기 | AI가 바꾼 큰 사건을 시리즈로 깊게 (예: AI가 수학계에 벌여놓은 일들) | 3 |
 | 🧪 [AI 활용](./ai-usage) | 비정기 | Claude로 직접 만들고 자동화해 본 경험 기록 | 10 |
@@ -24,6 +24,7 @@
 
 ### 2026-11-28
 
+- 📈 **AI 트렌드** · [에이전트에게 도구를 쥐여 주는 레포들: safe-anything, fast-anything, agent-sim](ai-trend/2026/11/2026-11-28-agent-native-rust-tools-and-ios-simulator.md) · [티스토리](https://dongseodong.tistory.com/86)
 - 🛠️ **개발 이슈** · [한 달 만에 또, 세션과 FPM을 노린 치명적 결함 9건](dev-issue/2026/11/2026-11-28-php-november-2026-critical-security-release.md) · [티스토리](https://dongseodong.tistory.com/72)
 - 🔬 **AI 심층 분석** · [AI가 뒤집어놓은 수학계 ① 리만 가설, 167년 난제를 AI가 풀었을까](ai-deep/2026/11/2026-11-28-ai-math-01-riemann.md) · [티스토리](https://dongseodong.tistory.com/81)
 - 🔬 **AI 심층 분석** · [AI가 뒤집어놓은 수학계 ② 양자 알고리즘, AI가 설계하고 증명까지 한 양자 회로](ai-deep/2026/11/2026-11-28-ai-math-02-quantum.md) · [티스토리](https://dongseodong.tistory.com/82)
