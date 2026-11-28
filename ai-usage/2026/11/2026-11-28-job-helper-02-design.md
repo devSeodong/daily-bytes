@@ -1,12 +1,12 @@
 ---
-title: "취업 도우미 에이전트 개발기 2편 · 설계 (FastAPI, SQLite)"
+title: "2편 설계: 로컬 앱 구조와 15인 심사 (FastAPI, SQLite)"
 date: 2026-11-28
 category: "AI 활용"
 tistory: https://dongseodong.tistory.com/74
 tags: ["취업도우미에이전트", "FastAPI", "SQLite", "토큰절약", "LLM설계", "개인정보", "로컬앱", "ClaudeCode", "AI활용"]
 cover: assets/2026-11-28-job-helper-02-design.png
 ---
-# 취업 도우미 에이전트 개발기 2편 · 설계 (FastAPI, SQLite)
+# 2편 설계: 로컬 앱 구조와 15인 심사 (FastAPI, SQLite)
 
 > 🧪 **AI 활용** · 2026-11-28 · 📝 [티스토리에서 보기](https://dongseodong.tistory.com/74)
 

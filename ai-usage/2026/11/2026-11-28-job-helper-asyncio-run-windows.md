@@ -1,12 +1,12 @@
 ---
-title: "취업 도우미 에이전트 개발기 · 윈도우에서만 터진 asyncio.run 오류 (FastAPI)"
+title: "윈도우에서만 터진 asyncio.run 오류 (FastAPI)"
 date: 2026-11-28
 category: "AI 활용"
 tistory: https://dongseodong.tistory.com/78
 tags: ["파이썬", "asyncio", "FastAPI", "이벤트루프", "WindowsOCR", "WinRT", "스레드풀", "취업도우미에이전트", "AI활용"]
 cover: assets/2026-11-28-job-helper-asyncio-run-windows.png
 ---
-# 취업 도우미 에이전트 개발기 · 윈도우에서만 터진 asyncio.run 오류 (FastAPI)
+# 윈도우에서만 터진 asyncio.run 오류 (FastAPI)
 
 > 🧪 **AI 활용** · 2026-11-28 · 📝 [티스토리에서 보기](https://dongseodong.tistory.com/78)
 

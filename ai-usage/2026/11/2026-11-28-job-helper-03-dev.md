@@ -1,12 +1,12 @@
 ---
-title: "취업 도우미 에이전트 개발기 3편 · 개발 (Notion OAuth, GitHub Actions)"
+title: "3편 개발: PR 12개로 돌아본 이틀 (Notion OAuth, GitHub Actions)"
 date: 2026-11-28
 category: "AI 활용"
 tistory: https://dongseodong.tistory.com/75
 tags: ["취업도우미에이전트", "ClaudeCode", "FastAPI", "NotionAPI", "OAuth", "OCR", "GitHubActions", "사이드프로젝트", "AI활용"]
 cover: assets/2026-11-28-job-helper-03-dev.png
 ---
-# 취업 도우미 에이전트 개발기 3편 · 개발 (Notion OAuth, GitHub Actions)
+# 3편 개발: PR 12개로 돌아본 이틀 (Notion OAuth, GitHub Actions)
 
 > 🧪 **AI 활용** · 2026-11-28 · 📝 [티스토리에서 보기](https://dongseodong.tistory.com/75)
 

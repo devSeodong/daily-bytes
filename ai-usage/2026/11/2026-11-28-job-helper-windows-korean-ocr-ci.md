@@ -1,12 +1,12 @@
 ---
-title: "취업 도우미 에이전트 개발기 · 맥에서 Windows 한국어 OCR 테스트하기 (GitHub Actions)"
+title: "맥에서 Windows 한국어 OCR 테스트하기 (GitHub Actions)"
 date: 2026-11-28
 category: "AI 활용"
 tistory: https://dongseodong.tistory.com/79
 tags: ["GitHubActions", "CI", "WindowsOCR", "한국어OCR", "PowerShell", "윈도우러너", "파이썬", "취업도우미에이전트", "AI활용"]
 cover: assets/2026-11-28-job-helper-windows-korean-ocr-ci.png
 ---
-# 취업 도우미 에이전트 개발기 · 맥에서 Windows 한국어 OCR 테스트하기 (GitHub Actions)
+# 맥에서 Windows 한국어 OCR 테스트하기 (GitHub Actions)
 
 > 🧪 **AI 활용** · 2026-11-28 · 📝 [티스토리에서 보기](https://dongseodong.tistory.com/79)
 

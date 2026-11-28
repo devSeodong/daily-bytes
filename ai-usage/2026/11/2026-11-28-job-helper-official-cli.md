@@ -1,12 +1,12 @@
 ---
-title: "취업 도우미 에이전트 개발기 · 앱에서 AI 구독을 쓰는 방법 (Claude Code CLI)"
+title: "앱에서 AI 구독을 쓰는 방법 (Claude Code CLI)"
 date: 2026-11-28
 category: "AI 활용"
 tistory: https://dongseodong.tistory.com/80
 tags: ["ClaudeCode", "GeminiCLI", "CLI", "AI구독", "LLM연동", "subprocess", "약관", "취업도우미에이전트", "AI활용"]
 cover: assets/2026-11-28-job-helper-official-cli.png
 ---
-# 취업 도우미 에이전트 개발기 · 앱에서 AI 구독을 쓰는 방법 (Claude Code CLI)
+# 앱에서 AI 구독을 쓰는 방법 (Claude Code CLI)
 
 > 🧪 **AI 활용** · 2026-11-28 · 📝 [티스토리에서 보기](https://dongseodong.tistory.com/80)
 

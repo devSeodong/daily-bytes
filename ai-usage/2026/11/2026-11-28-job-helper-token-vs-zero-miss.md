@@ -1,12 +1,12 @@
 ---
-title: "취업 도우미 에이전트 개발기 · 토큰 절약 vs 경험 누락 0 (LLM 설계)"
+title: "토큰 절약 vs 경험 누락 0 (LLM 설계)"
 date: 2026-11-28
 category: "AI 활용"
 tistory: https://dongseodong.tistory.com/76
 tags: ["취업도우미에이전트", "LLM설계", "토큰절약", "프롬프트캐시", "증분갱신", "해시", "ClaudeCode", "AI활용", "RAG"]
 cover: assets/2026-11-28-job-helper-token-vs-zero-miss.png
 ---
-# 취업 도우미 에이전트 개발기 · 토큰 절약 vs 경험 누락 0 (LLM 설계)
+# 토큰 절약 vs 경험 누락 0 (LLM 설계)
 
 > 🧪 **AI 활용** · 2026-11-28 · 📝 [티스토리에서 보기](https://dongseodong.tistory.com/76)
 

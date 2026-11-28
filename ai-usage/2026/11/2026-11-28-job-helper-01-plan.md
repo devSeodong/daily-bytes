@@ -1,12 +1,12 @@
 ---
-title: "취업 도우미 에이전트 개발기 1편 · 기획 (Figma, Notion)"
+title: "1편 기획: 한 사람을 위한 로컬 앱 (Figma, Notion)"
 date: 2026-11-28
 category: "AI 활용"
 tistory: https://dongseodong.tistory.com/73
 tags: ["취업도우미에이전트", "사이드프로젝트", "기획", "피그마", "노션", "ClaudeCode", "AI활용", "로컬앱", "증권사취업"]
 cover: assets/2026-11-28-job-helper-01-plan.png
 ---
-# 취업 도우미 에이전트 개발기 1편 · 기획 (Figma, Notion)
+# 1편 기획: 한 사람을 위한 로컬 앱 (Figma, Notion)
 
 > 🧪 **AI 활용** · 2026-11-28 · 📝 [티스토리에서 보기](https://dongseodong.tistory.com/73)
 

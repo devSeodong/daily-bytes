@@ -1,12 +1,12 @@
 ---
-title: "취업 도우미 에이전트 개발기 · 스택 PR이 main에 안 들어간 이유 (GitHub)"
+title: "스택 PR이 main에 안 들어간 이유 (GitHub)"
 date: 2026-11-28
 category: "AI 활용"
 tistory: https://dongseodong.tistory.com/77
 tags: ["GitHub", "PullRequest", "스택PR", "StackedPR", "git", "브랜치전략", "rebase", "취업도우미에이전트", "AI활용"]
 cover: assets/2026-11-28-job-helper-stacked-pr-base.png
 ---
-# 취업 도우미 에이전트 개발기 · 스택 PR이 main에 안 들어간 이유 (GitHub)
+# 스택 PR이 main에 안 들어간 이유 (GitHub)
 
 > 🧪 **AI 활용** · 2026-11-28 · 📝 [티스토리에서 보기](https://dongseodong.tistory.com/77)
 
