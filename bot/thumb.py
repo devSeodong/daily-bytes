@@ -8,7 +8,7 @@ python3.12 thumb.py --cat 01-ai-issue --title "줄1|줄2|줄3" --date 2026-11-26
 import argparse, os, re
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
-from config import CATS, day_dir, read_meta
+from config import CATS, cat, day_dir, read_meta
 
 W, H = 1200, 630
 BG = (15, 23, 42)
@@ -78,7 +78,7 @@ def wrap(text, f, maxw, draw, maxlines=3):
 
 
 def render(cat_key, lines_or_title, date, out):
-    c = CATS[cat_key]; col = hex2rgb(c["color"])
+    c = cat(cat_key); col = hex2rgb(c["color"])
     img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
     for x in range(0, W, 40):  # 픽셀 그리드 (빛 번짐 아래에 깔림)
@@ -129,7 +129,7 @@ def main():
         print(render(a.cat, a.title.split("|") if "|" in a.title else a.title, a.date, a.out or f"{a.cat}.png")); return
     d = day_dir(a.date); (d / "covers").mkdir(exist_ok=True)
     for f in sorted((d / "drafts").glob("*.html")):
-        if f.stem in CATS:
+        if cat(f.stem):
             out = d / "covers" / f"{f.stem}-cover.png"
             if out.exists() and out.stat().st_mtime >= f.stat().st_mtime:
                 print(f"{out} (이미 있음)"); continue
