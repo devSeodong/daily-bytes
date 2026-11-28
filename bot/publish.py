@@ -67,16 +67,19 @@ STAY_TXT = "로그인 상태 유지"
 
 def stay_box(page):
     """'로그인 상태 유지' 체크박스 locator. 카카오가 id/name을 바꿔도 라벨 글자로 찾아낸다."""
-    for sel in ("input#staySignedIn", "input[name='stay_signed_in']", "input[name='staySignedIn']"):
+    for sel in ("input[name='staySignedIn']", "input[name='stay_signed_in']",
+                "input[id^='staySignedIn']", "input#staySignedIn"):
         box = page.locator(sel).first
         try:
             if box.count():
                 return box
         except Exception:
             pass
-    # 라벨 글자 → for 속성 → 그 input
+    # 전용 라벨 id → for 속성 → 그 input
     try:
-        lab = page.locator(f"label:has-text('{STAY_TXT}')").first
+        lab = page.locator("#label-staySignedIn").first
+        if not lab.count():
+            lab = page.locator(f"label:has-text('{STAY_TXT}')").first
         if lab.count():
             fid = lab.get_attribute("for")
             if fid:
@@ -92,7 +95,12 @@ def stay_box(page):
 
 
 def ensure_stay(page):
-    """QR을 띄우기 '전에' 로그인 상태 유지를 켠다. 되는 방법이 나올 때까지 차례로 시도한다."""
+    """'로그인 상태 유지'를 켠다. QR 탭을 누른 '뒤에' 불러야 한다.
+
+    2026-11-28 확인: QR 탭 이전 화면에는 이 체크박스가 아예 없다
+    (그 화면의 체크박스는 name=saveSignedIn '간편로그인 정보 저장'으로 다른 것이다).
+    QR 탭을 누른 뒤에 name=staySignedIn, id=staySignedIn--1, 라벨 id=label-staySignedIn 으로 나타난다.
+    """
     box = stay_box(page)
     if box is None:
         print("로그인 상태 유지: 체크박스를 못 찾음", flush=True)
@@ -104,6 +112,7 @@ def ensure_stay(page):
     except Exception:
         pass
     attempts = [
+        ("id label click", lambda: page.locator("#label-staySignedIn").first.click(timeout=3000)),
         ("check()", lambda: box.check(timeout=3000, force=True)),
         ("label click", lambda: page.locator(f"label:has-text('{STAY_TXT}')").first.click(timeout=3000)),
         ("input click", lambda: box.click(timeout=3000, force=True)),
@@ -152,22 +161,40 @@ def force_stay_url(page):
 
 
 def open_qr_tab(page):
-    """QR 로그인 탭을 누르고, 주소가 실제로 qr_login 으로 바뀔 때까지 기다린다.
+    """QR 로그인 탭을 누르고, 화면이 QR 화면으로 바뀔 때까지 기다린다.
 
-    누른 직후에는 주소가 아직 로그인 페이지라서, 바로 검사하면
-    append_stay_signed_in 을 보정할 기회를 놓친다 (2026-11-28에 겪은 문제).
+    주소는 20초 넘게 accounts.kakao.com/login/ 그대로이고 화면 안에서만 바뀌므로,
+    주소가 아니라 '로그인 상태 유지' 체크박스가 나타나는 것을 기준으로 삼는다 (2026-11-28 확인).
     """
     try:
         page.get_by_text("QR코드 로그인").first.click(timeout=5000)
     except PWTimeout:
         pass
-    for _ in range(20):          # 최대 10초
-        if "qr_login" in page.url:
-            break
+    for _ in range(30):          # 최대 15초
+        if stay_box(page) is not None:
+            time.sleep(0.5)
+            return True
         time.sleep(0.5)
-    else:
-        print("QR 주소로 바뀌지 않았어요:", page.url[:120], flush=True)
-    time.sleep(1)
+    print("QR 화면으로 바뀌지 않았어요:", page.url[:120], flush=True)
+    return False
+
+
+def reissue_qr(page):
+    """상태 유지를 켠 뒤 QR을 다시 발급받는다. 먼저 뜬 QR에는 그 값이 안 담길 수 있다."""
+    for sel in ("button[aria-label*='새로고침']", "button:has-text('새로고침')",
+                "a:has-text('새로고침')", "button.btn_refresh", ".btn_refresh",
+                "button[class*='refresh']"):
+        try:
+            btn = page.locator(sel).first
+            if btn.count():
+                btn.click(timeout=3000)
+                time.sleep(2)
+                print(f"QR 재발급: {sel}", flush=True)
+                return True
+        except Exception:
+            continue
+    print("QR 재발급: 새로고침 버튼을 못 찾음 (떠 있는 QR을 그대로 씁니다)", flush=True)
+    return False
 
 
 def do_login(p):
@@ -184,15 +211,13 @@ def do_login(p):
     except PWTimeout:
         pass
     time.sleep(3)
-    # '로그인 상태 유지'는 QR 탭을 열기 '전에' 체크해야 QR 요청에 반영된다 (append_stay_signed_in=true).
-    # 나중에 체크하면 세션 쿠키로만 저장돼 브라우저를 닫는 순간 로그아웃된다.
-    ensure_stay(page)
+    # 순서가 중요하다. '로그인 상태 유지' 체크박스는 QR 탭을 누른 뒤에만 존재한다.
+    # 체크하지 않으면 서버가 세션을 짧게 잡아 반나절 만에 로그인이 풀린다 (2026-11-27, 11-28 확인).
     open_qr_tab(page)
-    if "append_stay_signed_in=false" in page.url:
-        # 체크박스가 안 먹은 경우. 주소를 직접 바로잡고, 그래도 안 되면 체크 후 QR을 다시 띄운다.
-        if not force_stay_url(page):
-            if ensure_stay(page):
-                open_qr_tab(page)
+    if ensure_stay(page):
+        reissue_qr(page)        # 먼저 뜬 QR에는 상태 유지가 안 담겼을 수 있다
+    elif "append_stay_signed_in=false" in page.url:
+        force_stay_url(page)    # 주소가 이미 QR 쪽으로 바뀌어 있으면 주소로 보정해 본다
     print("QR 주소 상태 유지:",
           "true" if "append_stay_signed_in=true" in page.url else page.url[:120], flush=True)
     shot = BOT / "work" / "login-qr.png"; shot.parent.mkdir(parents=True, exist_ok=True)
