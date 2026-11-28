@@ -3,7 +3,7 @@
 
 > 매일 한 입(byte)씩 쌓이는 IT 기록입니다. [서동이의 코딩일기](https://dongseodong.tistory.com/) **오늘의 IT** 시리즈와 **AI 활용** 경험 글을 모아 둔 아카이브입니다.
 
-![posts](https://img.shields.io/badge/posts-21-7C5CFF) ![days](https://img.shields.io/badge/days-5-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--28-F59E0B)
+![posts](https://img.shields.io/badge/posts-23-7C5CFF) ![days](https://img.shields.io/badge/days-5-10B981) ![updated](https://img.shields.io/badge/updated-2026--11--28-F59E0B)
 
 매일 저녁 8시(KST)에 티스토리로 한 편을 발행하고, 같은 글을 이곳에도 마크다운으로 함께 쌓습니다. 요일마다 카테고리가 정해져 있습니다.
 
@@ -18,6 +18,7 @@
 | 🛠️ [개발 이슈](./dev-issue) | 화·금 | EOL, 메이저 릴리스 등 개발자가 챙길 소식 | 5 |
 | 🔬 [AI 심층 분석](./ai-deep) | 비정기 | AI가 바꾼 큰 사건을 시리즈로 깊게 (예: AI가 수학계에 벌여놓은 일들) | 0 |
 | 🧪 [AI 활용](./ai-usage) | 비정기 | Claude로 직접 만들고 자동화해 본 경험 기록 | 10 |
+| 💻 [Computer Science](./cs) | 비정기 | 네트워크, 운영체제 같은 CS 기초를 비유와 함께 깊게 | 2 |
 
 ## 🗓️ 최근 7일
 
@@ -32,6 +33,8 @@
 - 🧪 **AI 활용** · [취업 도우미 에이전트 개발기 · 스택 PR이 main에 안 들어간 이유 (GitHub)](ai-usage/2026/11/2026-11-28-job-helper-stacked-pr-base.md) · [티스토리](https://dongseodong.tistory.com/77)
 - 🧪 **AI 활용** · [취업 도우미 에이전트 개발기 · 토큰 절약 vs 경험 누락 0 (LLM 설계)](ai-usage/2026/11/2026-11-28-job-helper-token-vs-zero-miss.md) · [티스토리](https://dongseodong.tistory.com/76)
 - 🧪 **AI 활용** · [취업 도우미 에이전트 개발기 · 맥에서 Windows 한국어 OCR 테스트하기 (GitHub Actions)](ai-usage/2026/11/2026-11-28-job-helper-windows-korean-ocr-ci.md) · [티스토리](https://dongseodong.tistory.com/79)
+- 💻 **Computer Science** · [OSI 7계층으로 이해하는 L2·L3·L4·L7 로드밸런서와 부하 분산 알고리즘](cs/2026/11/2026-11-28-load-balancer-types-osi.md) · [티스토리](https://dongseodong.tistory.com/85)
+- 💻 **Computer Science** · [택배 비유로 이해하는 계층별 역할, 프로토콜, 장비, 캡슐화](cs/2026/11/2026-11-28-osi-7-layer.md) · [티스토리](https://dongseodong.tistory.com/84)
 
 ### 2026-11-27
 

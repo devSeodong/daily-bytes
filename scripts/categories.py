@@ -4,4 +4,5 @@ CATEGORIES = {
     "dev-issue": {"label": "개발 이슈", "emoji": "🛠️", "desc": "EOL, 메이저 릴리스 등 개발자가 챙길 소식", "days": "화·금"},
     "ai-deep": {"label": "AI 심층 분석", "emoji": "🔬", "desc": "AI가 바꾼 큰 사건을 시리즈로 깊게 (예: AI가 수학계에 벌여놓은 일들)", "days": "비정기"},
     "ai-usage": {"label": "AI 활용", "emoji": "🧪", "desc": "Claude로 직접 만들고 자동화해 본 경험 기록", "days": "비정기"},
+    "cs": {"label": "Computer Science", "emoji": "💻", "desc": "네트워크, 운영체제 같은 CS 기초를 비유와 함께 깊게", "days": "비정기"},
 }
